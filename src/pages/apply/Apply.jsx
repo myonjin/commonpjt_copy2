@@ -34,16 +34,7 @@ const TextMaskCustomPhone = forwardRef(function TextMaskCustomPhone(
 });
 
 function Apply() {
-  const [positionList, setPositionList] = useState(
-    {
-      code: 1,
-      name: "FrontEnd",
-    },
-    {
-      codee: 2,
-      name: "BackEnd",
-    }
-  );
+  const [positionList, setPositionList] = useState([]);
 
   const [phone, setPhone] = useState({
     textmask: "000-0000-0000",
@@ -60,19 +51,10 @@ function Apply() {
   const fetchData = async () => {
     const res = await axios.get(SERVER_URL);
     setPositionList(res.data);
-    console.log(res.data);
-    console.log("----------");
-    console.log(positionList);
-    // setPositionList에 res.data가 들어가지 않음.
-    // 데이터는 잘 받아옴
   };
 
   useEffect(() => {
     fetchData();
-    const positionList = {
-      code: 1,
-      name: "FrontEnd",
-    };
   }, []);
 
   const a = (d) => {
@@ -126,7 +108,10 @@ function Apply() {
                 <Select value={"defaultPositon"} displayEmpty>
                   {/* <MenuItem value="aaa"> </MenuItem> */}
                   {/* {a()} */}
-                  {a(typeof positionList)}
+                  {/* {a(typeof positionList)} */}
+                  {positionList.map(({ name, code }, index) => (
+                    <MenuItem value={name}>{name}</MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </div>
